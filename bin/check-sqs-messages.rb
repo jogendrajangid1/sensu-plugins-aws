@@ -42,7 +42,13 @@ class SQSMsgs < Sensu::Plugin::Check::CLI
          long: '--aws-region REGION',
          description: 'AWS Region (defaults to us-east-1).',
          default: 'us-east-1'
-
+ 
+ option :profile,
+        short: '-p defaults',
+        long: '--aws-profile defaults',
+        description: 'AWS profile (defaults to defaults).',
+        default: 'defaults'
+  
   option :queues,
          short: '-q SQS_QUEUE',
          long: '--queue SQS_QUEUE',
@@ -100,7 +106,9 @@ class SQSMsgs < Sensu::Plugin::Check::CLI
   def aws_config
     { access_key_id: config[:aws_access_key],
       secret_access_key: config[:aws_secret_access_key],
-      region: config[:aws_region] }
+      region: config[:aws_region],
+      profile: config[:profile]
+}
   end
 
   def run
